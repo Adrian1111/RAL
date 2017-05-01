@@ -43,11 +43,12 @@ export class ArticleService {
        .map(children => children.map(d => new Comment(d.data.id,
            d.data.body, d.data.author, d.data.created)));
  }
- postComment(api_type: string, text: String, thing_id: String): Observable<Comment> {
+ // faked endpoint for reddits: /api/comment
+ postComment(api_type: string, text: string, thing_id: string): Observable<any> {
      let params = new URLSearchParams();
      params.set('api_type', api_type);
-     params.set('text', api_type);
-     params.set('thing_id', api_type);
+     params.set('text', text);
+     params.set('thing_id', thing_id);
       return this.http.post(this.commentUrl, {search: params})
           .map((res: Response) => res.json());
  }

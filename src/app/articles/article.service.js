@@ -51,11 +51,12 @@ var ArticleService = (function () {
             .map(function (json) { return json[1].data.children; })
             .map(function (children) { return children.map(function (d) { return new reddit_feed_models_1.Comment(d.data.id, d.data.body, d.data.author, d.data.created); }); });
     };
+    // faked endpoint for reddits: /api/comment
     ArticleService.prototype.postComment = function (api_type, text, thing_id) {
         var params = new http_1.URLSearchParams();
         params.set('api_type', api_type);
-        params.set('text', api_type);
-        params.set('thing_id', api_type);
+        params.set('text', text);
+        params.set('thing_id', thing_id);
         return this.http.post(this.commentUrl, { search: params })
             .map(function (res) { return res.json(); });
     };

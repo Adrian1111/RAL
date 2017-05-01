@@ -181,3 +181,7 @@ h2 {
 iframe {
     margin-left: 50px;
 }
+
+.alert.alert-success {
+    margin-left: 50px;
+}

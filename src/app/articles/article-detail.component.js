@@ -33,9 +33,20 @@ var ArticleDetailComponent = (function () {
             return _this.service.getComments(params['id']);
         });
     };
-    ArticleDetailComponent.prototype.gotoArticles = function () {
-        var articleId = this.article ? this.article.id : null;
-        this.router.navigate(['/articles', { id: articleId, foo: 'foo' }]);
+    ArticleDetailComponent.prototype.postComment = function (type, text, article) {
+        var _this = this;
+        // here you can see that model is actually send
+        console.log(type, text, article);
+        this.route.params
+            .switchMap(function (params) { return _this.service.postComment(type, text, 't3_' + article); })
+            .subscribe(function (responsetext) {
+            //wait 3 Seconds and hide
+            if (responsetext !== null) {
+                setTimeout(function () {
+                    this.commentSent = false;
+                }.bind(_this), 3000);
+            }
+        });
     };
     return ArticleDetailComponent;
 }());
@@ -49,7 +60,7 @@ __decorate([
 ], ArticleDetailComponent.prototype, "position", void 0);
 ArticleDetailComponent = __decorate([
     core_1.Component({
-        template: "\n  <div *ngIf=\"article\">\n    <h2>\"{{ article.title }}\"</h2>\n      <iframe width=\"1200\" height=\"700\" [src]=\"sanitizer.bypassSecurityTrustResourceUrl(article.url)\"></iframe>\n    \n  </div>\n  <h2>Comments</h2>\n  <ul>\n      <li *ngFor=\"let comment of comments | async\">\n        <span class=\"badge\">{{ comment.author }}</span> {{ comment.body }}\n      </li>\n   </ul>\n   <p class=\"bottomBtnsB\">\n      <button (click)=\"gotoArticles()\">Back</button>\n   </p>\n  "
+        template: "\n<div *ngIf=\"article\">\n    <h2>\"{{ article.title }}\"</h2>\n      <iframe width=\"1200\" height=\"700\" [src]=\"sanitizer.bypassSecurityTrustResourceUrl(article.url)\"></iframe>\n  </div>\n  <div class=\"container\">\n  <h2>Comments</h2>\n  <ul>\n      <li *ngFor=\"let comment of comments | async\">\n        <span class=\"badge\">{{ comment.author }}</span> {{ comment.body }}\n      </li>\n   </ul>\n</div>\n   \n<div class=\"container\">\n  <h2>Add a comment</h2>\n  <div *ngIf=\"commentSent\" class=\"alert alert-success alert-dismissable fade in\">\n    <a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>\n    <strong>Success!</strong> Comment has been added.\n  </div>\n  <form class=\"form-horizontal\">\n    <div class=\"form-group\">\n      <label class=\"control-label col-sm-2\" for=\"email\">Your comment:</label>\n      <div class=\"col-sm-10\">\n        <input [(ngModel)]=\"textComment\" type=\"text\" class=\"form-control\" id=\"comment\" placeholder=\"Enter text\" name=\"comment\">\n      </div>\n    </div>\n    <div class=\"form-group\">        \n      <div class=\"col-sm-offset-2 col-sm-10\">\n        <button (click)=\"commentSent = true; postComment('json', textComment, article.id)\" type=\"submit\" class=\"btn btn-default\">Submit</button>\n      </div>\n    </div>\n  </form>\n</div>\n\n   <p class=\"bottomBtnsB\">\n      <button (click)=\"gotoArticles()\">Back</button>\n   </p>\n  "
     }),
     __metadata("design:paramtypes", [router_1.ActivatedRoute,
         router_1.Router,
@@ -57,4 +68,9 @@ ArticleDetailComponent = __decorate([
         platform_browser_1.DomSanitizer])
 ], ArticleDetailComponent);
 exports.ArticleDetailComponent = ArticleDetailComponent;
+gotoArticles();
+{
+    var articleId = this.article ? this.article.id : null;
+    this.router.navigate(['/articles', { id: articleId, foo: 'foo' }]);
+}
 //# sourceMappingURL=article-detail.component.js.map
