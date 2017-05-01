@@ -5,7 +5,7 @@ import { ArticleService }  from './article.service';
 
 import {TestBed, inject, async} from '@angular/core/testing';
 
-describe('Markdown transformer service', () => {
+describe('Markdown articles service', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             providers: [
@@ -40,20 +40,17 @@ describe('Markdown transformer service', () => {
         }));*/
 
     describe('#getArticles', () => {
-        beforeEach(() => {
-            service.getArticles(null, null, 2);
-        });
+            let articles = service.getArticles(null, '68q4m3', 2);
 
-/*        it('should return the form matching the provided ID', () => {
-            expect(service.getForm(5)).toEqual(testForms[1]);
-            expect(service.getForm(2)).toEqual(testForms[0]);
+        it('should return the articles', () => {
+            expect(articles[0]).toEqual(testForms[0]);
+            expect(articles[1]).toEqual(testForms[1]);
         });
 
         it('should return `null` if it does NOT find a form matching the provided ID', () => {
-            expect(service.getForm(1)).toBeNull();
-            expect(service.getForm(null)).toBeNull();
-            expect(service.getForm(0)).toBeNull();
-        });*/
+            expect(service.getArticles(null, null, null)).toBeNull();
+            expect(service.getArticles(null, 'dfgdfgdf', 23)).toBeNull();
+        });
     });
 
 });
