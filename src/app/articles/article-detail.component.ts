@@ -31,12 +31,14 @@ import { DomSanitizer  } from '@angular/platform-browser';
     <div class="form-group">
       <label class="control-label col-sm-2" for="email">Your comment:</label>
       <div class="col-sm-10">
-        <input [(ngModel)]="textComment" type="text" class="form-control" id="comment" placeholder="Enter text" name="comment">
+        <input [(ngModel)]="textComment" type="text" class="form-control"
+         id="comment" placeholder="Enter text" name="comment">
       </div>
     </div>
     <div class="form-group">        
       <div class="col-sm-offset-2 col-sm-10">
-        <button (click)="commentSent = true; postComment('json', textComment, article.id)" type="submit" class="btn btn-default">Submit</button>
+        <button (click)="commentSent = true; postComment('json', textComment, article.id)"
+         type="submit" class="btn btn-default">Submit</button>
       </div>
     </div>
   </form>
@@ -72,6 +74,7 @@ export class ArticleDetailComponent implements OnInit {
         .switchMap((params: Params) => {
           return this.service.getComments( params['id'] );
         });
+    this.comments.subscribe(x => {console.log(x); });
   }
   postComment(type: string, text: string, article: string) {
     // here you can see that model is actually send
@@ -79,10 +82,9 @@ export class ArticleDetailComponent implements OnInit {
       this.route.params
           .switchMap((params: Params) => this.service.postComment(type, text, 't3_' + article))
           .subscribe( (responsetext: any) => {
-          //wait 3 Seconds and hide
-            if(responsetext !== null)
-            {
-              setTimeout(function() {
+          // wait 3 Seconds and hide
+            if (responsetext !== null) {
+                setTimeout(function() {
                 this.commentSent = false;
               }.bind(this), 3000);
             }

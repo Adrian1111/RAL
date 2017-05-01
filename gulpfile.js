@@ -44,7 +44,8 @@ gulp.task('unused', function () {
 
 const jasmine = require('gulp-jasmine');
 
-gulp.task('service-test', () =>
+gulp.task('default', () =>
     gulp.src('src/app/articles/article.service.test.ts')
+    // gulp-jasmine works on filepaths so you can't have any plugins before it
         .pipe(jasmine())
 );
