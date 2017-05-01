@@ -54,7 +54,7 @@ export class ArticleDetailComponent implements OnInit {
   article: Article;
   comments: Observable<Comment[]>;
   textComment: string;
-  commentSent: bool;
+  commentSent: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -80,12 +80,14 @@ export class ArticleDetailComponent implements OnInit {
           .switchMap((params: Params) => this.service.postComment(type, text, 't3_' + article))
           .subscribe( (responsetext: any) => {
           //wait 3 Seconds and hide
-            if(responsetext !== null){
+            if(responsetext !== null)
+            {
               setTimeout(function() {
                 this.commentSent = false;
               }.bind(this), 3000);
-              );
             }
+          }
+          );
   }
   gotoArticles() {
     let articleId = this.article ? this.article.id : null;

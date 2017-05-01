@@ -48,6 +48,10 @@ var ArticleDetailComponent = (function () {
             }
         });
     };
+    ArticleDetailComponent.prototype.gotoArticles = function () {
+        var articleId = this.article ? this.article.id : null;
+        this.router.navigate(['/articles', { id: articleId, foo: 'foo' }]);
+    };
     return ArticleDetailComponent;
 }());
 __decorate([
@@ -68,9 +72,4 @@ ArticleDetailComponent = __decorate([
         platform_browser_1.DomSanitizer])
 ], ArticleDetailComponent);
 exports.ArticleDetailComponent = ArticleDetailComponent;
-gotoArticles();
-{
-    var articleId = this.article ? this.article.id : null;
-    this.router.navigate(['/articles', { id: articleId, foo: 'foo' }]);
-}
 //# sourceMappingURL=article-detail.component.js.map
