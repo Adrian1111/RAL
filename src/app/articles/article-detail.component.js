@@ -13,11 +13,13 @@ require("rxjs/add/operator/switchMap");
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var article_service_1 = require("./article.service");
+var platform_browser_1 = require("@angular/platform-browser");
 var ArticleDetailComponent = (function () {
-    function ArticleDetailComponent(route, router, service) {
+    function ArticleDetailComponent(route, router, service, sanitizer) {
         this.route = route;
         this.router = router;
         this.service = service;
+        this.sanitizer = sanitizer;
         this.display = 'block';
         this.position = 'absolute';
     }
@@ -25,10 +27,7 @@ var ArticleDetailComponent = (function () {
         var _this = this;
         this.route.params
             .switchMap(function (params) { return _this.service.getArticle(params['id']); })
-            .subscribe(function (article) {
-            _this.article = article;
-            _this.url = article.url;
-        });
+            .subscribe(function (article) { return _this.article = article; });
         this.comments = this.route.params
             .switchMap(function (params) {
             return _this.service.getComments(params['id']);
@@ -50,11 +49,12 @@ __decorate([
 ], ArticleDetailComponent.prototype, "position", void 0);
 ArticleDetailComponent = __decorate([
     core_1.Component({
-        template: "\n  <div *ngIf=\"article\">\n    <h2>\"{{ article.title }}\"</h2>\n      <iframe [src]=\"article.url\"></iframe>{{url}}\n    \n  </div>\n  <h2>Comments</h2>\n  <ul>\n      <li *ngFor=\"let comment of comments | async\">\n        <span class=\"badge\">{{ comment.author }}</span> {{ comment.body }}\n      </li>\n   </ul>\n   <p class=\"bottomBtnsB\">\n      <button (click)=\"gotoArticles()\">Back</button>\n   </p>\n  "
+        template: "\n  <div *ngIf=\"article\">\n    <h2>\"{{ article.title }}\"</h2>\n      <iframe width=\"1200\" height=\"700\" [src]=\"sanitizer.bypassSecurityTrustResourceUrl(article.url)\"></iframe>\n    \n  </div>\n  <h2>Comments</h2>\n  <ul>\n      <li *ngFor=\"let comment of comments | async\">\n        <span class=\"badge\">{{ comment.author }}</span> {{ comment.body }}\n      </li>\n   </ul>\n   <p class=\"bottomBtnsB\">\n      <button (click)=\"gotoArticles()\">Back</button>\n   </p>\n  "
     }),
     __metadata("design:paramtypes", [router_1.ActivatedRoute,
         router_1.Router,
-        article_service_1.ArticleService])
+        article_service_1.ArticleService,
+        platform_browser_1.DomSanitizer])
 ], ArticleDetailComponent);
 exports.ArticleDetailComponent = ArticleDetailComponent;
 //# sourceMappingURL=article-detail.component.js.map
