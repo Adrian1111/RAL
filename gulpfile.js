@@ -41,3 +41,10 @@ gulp.task('unused', function () {
         }))
         .pipe(gulp.dest('./out'));
 });
+
+const jasmine = require('gulp-jasmine');
+
+gulp.task('service-test', () =>
+    gulp.src('src/app/articles/article.service.test.ts')
+        .pipe(jasmine())
+);
