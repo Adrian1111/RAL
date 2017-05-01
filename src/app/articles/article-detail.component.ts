@@ -38,7 +38,7 @@ import { DomSanitizer  } from '@angular/platform-browser';
     <div class="form-group">        
       <div class="col-sm-offset-2 col-sm-10">
         <button (click)="commentSent = true; postComment('json', textComment, article.id)"
-         type="submit" class="btn btn-default">Submit</button>
+         type="submit" class="btn btn-default" [disabled]="textComment == null">Submit</button>
       </div>
     </div>
   </form>
