@@ -8,42 +8,7 @@ import { ArticleService }  from './article.service';
 import {Article} from './reddit_feed.models';
 
 @Component({
-  template: `
-<table class="mainTable table-striped table-bordered table-hover table-condensed table-responsive">
-    <thead>
-    <tr>
-        <th>Id</th>
-        <th>Author</th>
-        <th>Name</th>
-        <th>Created</th>
-    </tr>
-    </thead>
-    <tbody >
-        <tr *ngFor="let i = index; let article of articles | async" 
-        [class.selected]="isSelected(article)"
-        (click)="onSelect(article)">
-        <td>{{(i+1) + (artNumberPerPage * (currentPage - 1))}}</td>
-        <td>{{ article.author}}</td>
-        <td>{{ article.title }}</td>
-        <td>{{ article.created_utc * 1000 | date : "MM/dd/yyyy 'at' h:mma"}}</td>
-        </tr>
-    </tbody>
-    
-</table>
-<div class="bottomBtns">
-      <button (click)="pagination('first')"
-              class="btn btn-xs btn-primary" [disabled]="currentPage == 1">first
-      </button>
-      <button (click)="pagination('prev')"
-              class="btn btn-xs btn-primary" [disabled]="currentPage == 1">previous
-      </button>
-      <div class="pageNum">{{currentPage}}</div>
-      <button (click)="pagination('next')"
-              class="btn btn-xs btn-primary">next
-      </button>
-</div>
-
-  `
+  templateUrl: './article-list.component.html'
 })
 export class ArticleListComponent implements OnInit {
   articles: Observable<Article[]>;
